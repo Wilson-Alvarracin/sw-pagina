@@ -7,16 +7,14 @@
     <title>Registro</title>
 </head>
 <body>
-
-<?php
-session_start();
-include 'conexion.php';
-
-if (isset($_POST['crear'])|| $_SERVER["REQUEST_METHOD"] == "POST") {
-    $name = $_POST['logname'];
-    $email = $_POST['logemail'];
-    $pwd = sha1($_POST ['logpass']);
-
+    <?php
+    include 'conexion.php';
+    
+    if (isset($_POST['crear'])|| $_SERVER["REQUEST_METHOD"] == "POST") {
+        $name = $_POST['logname'];
+        $email = $_POST['logemail'];
+        $pwd = sha1($_POST ['logpass']);
+    
         //Subir datos a la tabla correspondiente
 
         //Procederemos a hacer una consulta que buscara el correo del usuario
@@ -33,17 +31,15 @@ if (isset($_POST['crear'])|| $_SERVER["REQUEST_METHOD"] == "POST") {
         if($contador == 1) {
             echo "<script> window.location.href='./../login.php?msg=1'</script>";
 
-            
-
-        }  else {
-            echo 'El correo no existe';
-            $sql = "INSERT INTO tbl_usuarios (`correo_usuario`, `nom_usuario`, `pwd_usuario`) VALUES ('$email', '$name','$pwd');";
-            $insert = mysqli_query($connection, $sql);
-
+            } else {
+                $sql = "INSERT INTO tbl_usuarios (`correo_usuario`, `nom_usuario`, `pwd_usuario`) VALUES ('$email', '$name','$pwd');";
+                $insert = mysqli_query($connection, $sql);
+                echo "<script> window.location.href='./../login.php'</script>";
+            }
+        }else{
+            echo "<script> window.location.href='./../login.php'</script>";
         }
-}else{
-
-}
-?>
+    ?>
+    
 </body>
 </html>
